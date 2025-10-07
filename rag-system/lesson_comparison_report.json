@@ -1,0 +1,1292 @@
+{
+  "summary": {
+    "total_lessons": 20,
+    "analyzed_lessons": 20,
+    "issues_found": 15,
+    "major_issues": [
+      {
+        "lesson": "lesson01",
+        "title": "课程导入与环境准备",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson08",
+        "title": "混合检索融合策略",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson09",
+        "title": "元数据过滤",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson11",
+        "title": "Chunk尺寸与重叠实验",
+        "status": "major_refactor",
+        "issues": [
+          "存在大量删除操作 (删除8110行, 新增3212行)"
+        ]
+      },
+      {
+        "lesson": "lesson12",
+        "title": "多文档源处理",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson13",
+        "title": "引用与可溯源输出",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson14",
+        "title": "缓存策略",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson15",
+        "title": "批量/断点续传",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson16",
+        "title": "增量更新",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson17",
+        "title": "结构化数据接入",
+        "status": "no_changes",
+        "issues": [
+          "该课程没有任何代码变更"
+        ]
+      },
+      {
+        "lesson": "lesson20",
+        "title": "故障注入与恢复演练",
+        "status": "missing_branch",
+        "issues": [
+          "找不到对应的分支数据"
+        ]
+      }
+    ],
+    "minor_issues": [
+      {
+        "lesson": "lesson02",
+        "title": "容器化与依赖服务启动",
+        "status": "minimal_changes",
+        "issues": [
+          "代码变更量很少 (仅新增3行)"
+        ]
+      },
+      {
+        "lesson": "lesson03",
+        "title": "数据模型与迁移",
+        "status": "minimal_changes",
+        "issues": [
+          "代码变更量很少 (仅新增2行)"
+        ]
+      },
+      {
+        "lesson": "lesson04",
+        "title": "PDF解析与Chunk拆分",
+        "status": "minimal_changes",
+        "issues": [
+          "代码变更量很少 (仅新增3行)"
+        ]
+      },
+      {
+        "lesson": "lesson06",
+        "title": "最小检索与生成（MVP RAG）",
+        "status": "minimal_changes",
+        "issues": [
+          "代码变更量很少 (仅新增2行)"
+        ]
+      }
+    ],
+    "normal_implementations": [
+      {
+        "lesson": "lesson05",
+        "title": "Embedding与向量入库",
+        "status": "major_changes"
+      },
+      {
+        "lesson": "lesson07",
+        "title": "关键词检索",
+        "status": "normal_changes"
+      },
+      {
+        "lesson": "lesson10",
+        "title": "重排序(Rerank)接入",
+        "status": "major_changes"
+      },
+      {
+        "lesson": "lesson18",
+        "title": "文本清洗与去噪",
+        "status": "major_changes"
+      },
+      {
+        "lesson": "lesson19",
+        "title": "切分策略插件化",
+        "status": "major_changes"
+      }
+    ]
+  },
+  "detailed_analysis": {
+    "lesson01": {
+      "lesson_id": "lesson01",
+      "title": "课程导入与环境准备",
+      "module": "A",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "创建基础项目结构",
+        "配置Python环境和依赖管理(uv)",
+        "创建最小FastAPI应用",
+        "配置开发环境"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "fastapi",
+          "uvicorn"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson02": {
+      "lesson_id": "lesson02",
+      "title": "容器化与依赖服务启动",
+      "module": "A",
+      "status": "minimal_changes",
+      "issues": [
+        "代码变更量很少 (仅新增3行)"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 1,
+        "insertions": 3,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "添加Docker Compose配置",
+        "配置PostgreSQL、Redis、Qdrant、MinIO服务",
+        "添加容器化相关依赖"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "beautifulsoup4",
+          "lxml",
+          "requests"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson03": {
+      "lesson_id": "lesson03",
+      "title": "数据模型与迁移",
+      "module": "A",
+      "status": "minimal_changes",
+      "issues": [
+        "代码变更量很少 (仅新增2行)"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 1,
+        "insertions": 2,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "设计RAG系统核心数据模型",
+        "实现SQLModel数据模型",
+        "配置数据库连接",
+        "实现数据迁移脚本"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "chromadb",
+          "sentence-transformers"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson04": {
+      "lesson_id": "lesson04",
+      "title": "PDF解析与Chunk拆分",
+      "module": "A",
+      "status": "minimal_changes",
+      "issues": [
+        "代码变更量很少 (仅新增3行)"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 1,
+        "insertions": 3,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现PDF文档解析功能",
+        "实现文本分块(Chunk)处理",
+        "添加文档结构识别",
+        "实现元数据提取"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "PyMuPDF",
+          "fitz"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson05": {
+      "lesson_id": "lesson05",
+      "title": "Embedding与向量入库",
+      "module": "A",
+      "status": "major_changes",
+      "issues": [],
+      "matches": [
+        "有大量代码新增 (19321行)"
+      ],
+      "actual_changes": {
+        "files_changed": 119,
+        "insertions": 19321,
+        "deletions": 16,
+        "new_files": [
+          "Dockerfile",
+          "alembic.ini",
+          "alembic/env.py",
+          "alembic/script.py.mako",
+          "config/prometheus.yml",
+          "config/redis.conf",
+          "data/embeddings/.gitkeep",
+          "data/processed/.gitkeep",
+          "data/raw/.gitkeep",
+          "docker-compose.monitoring.yml",
+          "docker-compose.override.yml",
+          "docker-compose.yml",
+          "docker/nginx/nginx.conf",
+          "docker/postgres/init/01-init-db.sql",
+          "docker/redis/redis-dev.conf",
+          "docker/redis/redis.conf",
+          "docker/scripts/entrypoint.sh",
+          "docker/scripts/healthcheck.sh",
+          "init-scripts/01-init-tables.sql",
+          "requirements.txt",
+          "scripts/backup.sh",
+          "scripts/init-db.sql",
+          "scripts/migrate_data.py",
+          "scripts/optimize_database.py",
+          "scripts/start_dev.py",
+          "scripts/test_services.py",
+          "scripts/verify_environment.py",
+          "src/__pycache__/main.cpython-313.pyc",
+          "src/api/__init__.py",
+          "src/api/__pycache__/__init__.cpython-313.pyc",
+          "src/api/__pycache__/embedding.cpython-313.pyc",
+          "src/api/__pycache__/health.cpython-313.pyc",
+          "src/api/__pycache__/rag.cpython-313.pyc",
+          "src/api/embedding.py",
+          "src/api/health.py",
+          "src/api/rag.py",
+          "src/chunking/__init__.py",
+          "src/chunking/chunk_manager.py",
+          "src/chunking/chunker.py",
+          "src/chunking/semantic_chunker.py",
+          "src/chunking/sentence_chunker.py",
+          "src/chunking/structure_chunker.py",
+          "src/config.py",
+          "src/database/__init__.py",
+          "src/database/config.py",
+          "src/database/connection.py",
+          "src/database/init_db.py",
+          "src/document/__init__.py",
+          "src/document/__pycache__/__init__.cpython-312.pyc",
+          "src/document/__pycache__/__init__.cpython-313.pyc",
+          "src/document/__pycache__/chunker.cpython-312.pyc",
+          "src/document/__pycache__/chunker.cpython-313.pyc",
+          "src/document/__pycache__/document_manager.cpython-312.pyc",
+          "src/document/__pycache__/document_manager.cpython-313.pyc",
+          "src/document/__pycache__/docx_parser.cpython-312.pyc",
+          "src/document/__pycache__/docx_parser.cpython-313.pyc",
+          "src/document/__pycache__/parser.cpython-312.pyc",
+          "src/document/__pycache__/parser.cpython-313.pyc",
+          "src/document/__pycache__/pdf_parser.cpython-312.pyc",
+          "src/document/__pycache__/pdf_parser.cpython-313.pyc",
+          "src/document/__pycache__/txt_parser.cpython-312.pyc",
+          "src/document/__pycache__/txt_parser.cpython-313.pyc",
+          "src/document/chunker.py",
+          "src/document/document_manager.py",
+          "src/document/docx_parser.py",
+          "src/document/parser.py",
+          "src/document/pdf_parser.py",
+          "src/document/txt_parser.py",
+          "src/embedding/__init__.py",
+          "src/embedding/__pycache__/__init__.cpython-312.pyc",
+          "src/embedding/__pycache__/__init__.cpython-313.pyc",
+          "src/embedding/__pycache__/embedder.cpython-312.pyc",
+          "src/embedding/__pycache__/embedder.cpython-313.pyc",
+          "src/embedding/embedder.py",
+          "src/main.py",
+          "src/rag/__init__.py",
+          "src/rag/__pycache__/__init__.cpython-313.pyc",
+          "src/rag/__pycache__/qa_generator.cpython-313.pyc",
+          "src/rag/__pycache__/rag_service.cpython-313.pyc",
+          "src/rag/__pycache__/retriever.cpython-313.pyc",
+          "src/rag/qa_generator.py",
+          "src/rag/rag_service.py",
+          "src/rag/retriever.py",
+          "src/repositories/__init__.py",
+          "src/repositories/base.py",
+          "src/repositories/document.py",
+          "src/repositories/query.py",
+          "src/repositories/user.py",
+          "src/vector_store/__init__.py",
+          "src/vector_store/__pycache__/__init__.cpython-312.pyc",
+          "src/vector_store/__pycache__/__init__.cpython-313.pyc",
+          "src/vector_store/__pycache__/document_vectorizer.cpython-312.pyc",
+          "src/vector_store/__pycache__/document_vectorizer.cpython-313.pyc",
+          "src/vector_store/__pycache__/qdrant_client.cpython-312.pyc",
+          "src/vector_store/__pycache__/qdrant_client.cpython-313.pyc",
+          "src/vector_store/document_vectorizer.py",
+          "src/vector_store/qdrant_client.py",
+          "start.bat",
+          "start.sh",
+          "test_chunking.py",
+          "test_connections.py",
+          "test_database.py",
+          "test_document_manager.py",
+          "test_documents/long_text.txt",
+          "test_documents/sample.md",
+          "test_documents/sample.txt",
+          "test_documents/structured.md",
+          "test_models.py",
+          "test_pdf_parser.py",
+          "test_repositories.py",
+          "tests/__pycache__/test_batch_vectorization.cpython-312-pytest-7.4.3.pyc",
+          "tests/__pycache__/test_embedding.cpython-312-pytest-7.4.3.pyc",
+          "tests/__pycache__/test_qdrant.cpython-312-pytest-7.4.3.pyc",
+          "tests/test_batch_vectorization.py",
+          "tests/test_embedding.py",
+          "tests/test_qdrant.py",
+          "uv.lock"
+        ],
+        "modified_files": [
+          "README.md",
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现文本向量化功能",
+        "集成sentence-transformers和bge-m3模型",
+        "实现Qdrant向量数据库操作",
+        "实现批量向量化处理"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "sentence-transformers",
+          "qdrant-client"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson06": {
+      "lesson_id": "lesson06",
+      "title": "最小检索与生成（MVP RAG）",
+      "module": "A",
+      "status": "minimal_changes",
+      "issues": [
+        "代码变更量很少 (仅新增2行)"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 1,
+        "insertions": 2,
+        "deletions": 2,
+        "new_files": [],
+        "modified_files": [
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现基础向量检索功能",
+        "集成LLM调用接口",
+        "实现基础RAG流程",
+        "创建API接口"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "openai"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson07": {
+      "lesson_id": "lesson07",
+      "title": "关键词检索",
+      "module": "B",
+      "status": "normal_changes",
+      "issues": [],
+      "matches": [
+        "代码变更量正常 (391行新增)"
+      ],
+      "actual_changes": {
+        "files_changed": 8,
+        "insertions": 391,
+        "deletions": 3,
+        "new_files": [
+          "\".trae/documents/lesson08_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211.md\"",
+          "__pycache__/keyword_search.cpython-313.pyc",
+          "__pycache__/test_jieba.cpython-313.pyc",
+          "keyword_search.py",
+          "test_jieba.py",
+          "test_lesson07.py"
+        ],
+        "modified_files": [
+          "Dockerfile",
+          "pyproject.toml"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现PostgreSQL全文检索功能",
+        "添加中文分词支持",
+        "实现关键词检索和排序",
+        "优化查询性能"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "jieba"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson08": {
+      "lesson_id": "lesson08",
+      "title": "混合检索融合策略",
+      "module": "B",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现向量检索与关键词检索融合",
+        "实现权重调节算法",
+        "实现去重和排序策略",
+        "添加A/B测试框架"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson09": {
+      "lesson_id": "lesson09",
+      "title": "元数据过滤",
+      "module": "B",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现基于元数据的过滤功能",
+        "支持动态复合查询条件",
+        "优化元数据索引",
+        "添加查询性能监控"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson10": {
+      "lesson_id": "lesson10",
+      "title": "重排序(Rerank)接入",
+      "module": "B",
+      "status": "major_changes",
+      "issues": [],
+      "matches": [
+        "有大量代码新增 (10487行)"
+      ],
+      "actual_changes": {
+        "files_changed": 61,
+        "insertions": 10487,
+        "deletions": 63,
+        "new_files": [
+          "app/services/__pycache__/hybrid_search.cpython-313.pyc",
+          "app/services/__pycache__/keyword_search.cpython-313.pyc",
+          "app/services/__pycache__/metadata_filter.cpython-313.pyc",
+          "app/services/__pycache__/vector_search.cpython-313.pyc",
+          "app/services/cached_rerank.py",
+          "app/services/enhanced_rag.py",
+          "app/services/hybrid_search.py",
+          "app/services/keyword_search.py",
+          "app/services/metadata_filter.py",
+          "app/services/rerank.py",
+          "app/services/rerank_ab_test.py",
+          "app/services/vector_search.py",
+          "interactive_metadata_query.py",
+          "lesson11_chunk_experiment/README.md",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/__pycache__/chunk_optimizer.cpython-313.pyc",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/__pycache__/experiment_visualizer.cpython-313.pyc",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/__pycache__/mock_rag_system.cpython-313.pyc",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/chunk_optimizer.py",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/experiment_visualizer.py",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/interactive_tuner.py",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/mock_rag_system.py",
+          "lesson11_chunk_experiment/experiments/chunk_optimization/run_chunk_experiment.py",
+          "lesson11_chunk_experiment/start_interactive_tuner.py",
+          "lesson11_chunk_experiment/test_chunk_system.py",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "migrations/add_metadata_fields.sql",
+          "scripts/insert_test_metadata.py",
+          "src/rerank/__init__.py",
+          "src/rerank/ab_test_rerank.py",
+          "src/rerank/enhanced_rag_query.py",
+          "src/rerank/test_basic_rerank.py",
+          "src/rerank/test_cached_rerank.py",
+          "test_hybrid_search.py",
+          "test_metadata_filter.py",
+          "test_metadata_simple.py",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274.md\"",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211.md\""
+        ],
+        "modified_files": [
+          "pyproject.toml",
+          "src/api/__pycache__/__init__.cpython-313.pyc",
+          "src/api/__pycache__/embedding.cpython-313.pyc",
+          "src/api/__pycache__/health.cpython-313.pyc",
+          "src/api/rag.py",
+          "src/document/__pycache__/__init__.cpython-313.pyc",
+          "src/document/__pycache__/chunker.cpython-313.pyc",
+          "src/document/__pycache__/document_manager.cpython-313.pyc",
+          "src/document/__pycache__/docx_parser.cpython-313.pyc",
+          "src/document/__pycache__/parser.cpython-313.pyc",
+          "src/document/__pycache__/pdf_parser.cpython-313.pyc",
+          "src/document/__pycache__/txt_parser.cpython-313.pyc",
+          "src/embedding/__pycache__/__init__.cpython-313.pyc",
+          "src/embedding/__pycache__/embedder.cpython-313.pyc",
+          "src/rag/__pycache__/__init__.cpython-313.pyc",
+          "src/rag/__pycache__/qa_generator.cpython-313.pyc",
+          "src/rag/__pycache__/rag_service.cpython-313.pyc",
+          "src/rag/__pycache__/retriever.cpython-313.pyc",
+          "src/rag/rag_service.py",
+          "src/rag/retriever.py",
+          "src/vector_store/__pycache__/__init__.cpython-313.pyc",
+          "src/vector_store/__pycache__/document_vectorizer.cpython-313.pyc",
+          "src/vector_store/__pycache__/qdrant_client.cpython-313.pyc"
+        ],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "集成bge-reranker-v2-m3模型",
+        "实现重排序功能",
+        "添加缓存策略",
+        "提升检索精度"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "sentence-transformers"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson11": {
+      "lesson_id": "lesson11",
+      "title": "Chunk尺寸与重叠实验",
+      "module": "B",
+      "status": "major_refactor",
+      "issues": [
+        "存在大量删除操作 (删除8110行, 新增3212行)"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 33,
+        "insertions": 3212,
+        "deletions": 8110,
+        "new_files": [
+          "src/chunk_experiment/experiments/chunk_optimization/__pycache__/chunk_optimizer.cpython-313.pyc",
+          "src/chunk_experiment/experiments/chunk_optimization/__pycache__/experiment_visualizer.cpython-313.pyc",
+          "src/chunk_experiment/experiments/chunk_optimization/__pycache__/mock_rag_system.cpython-313.pyc",
+          "src/chunk_experiment/experiments/chunk_optimization/chunk_optimizer.py",
+          "src/chunk_experiment/experiments/chunk_optimization/experiment_visualizer.py",
+          "src/chunk_experiment/interactive_tuner.py",
+          "src/chunk_experiment/mock_rag_system.py",
+          "src/chunk_experiment/run_chunk_experiment.py",
+          "\"\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "\"\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\""
+        ],
+        "modified_files": [
+          "pyproject.toml",
+          "src/api/__pycache__/__init__.cpython-313.pyc",
+          "src/api/__pycache__/embedding.cpython-313.pyc",
+          "src/api/__pycache__/health.cpython-313.pyc",
+          "src/api/rag.py",
+          "src/document/__pycache__/__init__.cpython-313.pyc",
+          "src/document/__pycache__/chunker.cpython-313.pyc",
+          "src/document/__pycache__/document_manager.cpython-313.pyc",
+          "src/document/__pycache__/docx_parser.cpython-313.pyc",
+          "src/document/__pycache__/parser.cpython-313.pyc",
+          "src/document/__pycache__/pdf_parser.cpython-313.pyc",
+          "src/document/__pycache__/txt_parser.cpython-313.pyc",
+          "src/embedding/__pycache__/__init__.cpython-313.pyc",
+          "src/embedding/__pycache__/embedder.cpython-313.pyc",
+          "src/rag/__pycache__/__init__.cpython-313.pyc",
+          "src/rag/__pycache__/qa_generator.cpython-313.pyc",
+          "src/rag/__pycache__/rag_service.cpython-313.pyc",
+          "src/rag/__pycache__/retriever.cpython-313.pyc",
+          "src/rag/rag_service.py",
+          "src/rag/retriever.py",
+          "src/vector_store/__pycache__/__init__.cpython-313.pyc",
+          "src/vector_store/__pycache__/document_vectorizer.cpython-313.pyc",
+          "src/vector_store/__pycache__/qdrant_client.cpython-313.pyc"
+        ],
+        "deleted_files": [
+          "app/services/__pycache__/hybrid_search.cpython-313.pyc",
+          "app/services/__pycache__/keyword_search.cpython-313.pyc",
+          "app/services/__pycache__/metadata_filter.cpython-313.pyc",
+          "app/services/__pycache__/vector_search.cpython-313.pyc",
+          "app/services/cached_rerank.py",
+          "app/services/enhanced_rag.py",
+          "app/services/hybrid_search.py",
+          "app/services/keyword_search.py",
+          "app/services/metadata_filter.py",
+          "app/services/rerank.py",
+          "app/services/rerank_ab_test.py",
+          "app/services/vector_search.py",
+          "interactive_metadata_query.py",
+          "lesson11_chunk_experiment/README.md",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "migrations/add_metadata_fields.sql",
+          "scripts/insert_test_metadata.py",
+          "src/rerank/__init__.py",
+          "src/rerank/ab_test_rerank.py",
+          "src/rerank/enhanced_rag_query.py",
+          "src/rerank/test_basic_rerank.py",
+          "src/rerank/test_cached_rerank.py",
+          "test_hybrid_search.py",
+          "test_metadata_filter.py",
+          "test_metadata_simple.py",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274.md\"",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211.md\""
+        ]
+      },
+      "expected_changes": [
+        "实现动态分块算法",
+        "优化重叠策略",
+        "添加分块质量评估",
+        "实现参数调优实验"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson12": {
+      "lesson_id": "lesson12",
+      "title": "多文档源处理",
+      "module": "B",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "支持PDF、Word、TXT、HTML文档解析",
+        "实现批量处理优化",
+        "添加错误处理机制",
+        "统一文档处理接口"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "python-docx",
+          "beautifulsoup4"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson13": {
+      "lesson_id": "lesson13",
+      "title": "引用与可溯源输出",
+      "module": "B",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现引用链追踪",
+        "添加置信度计算",
+        "实现可溯源信息展示",
+        "与生成结果结合"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson14": {
+      "lesson_id": "lesson14",
+      "title": "缓存策略",
+      "module": "B",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现Redis多级缓存",
+        "添加缓存失效与更新策略",
+        "优化缓存命中率",
+        "设计分布式缓存"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "redis"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson15": {
+      "lesson_id": "lesson15",
+      "title": "批量/断点续传",
+      "module": "C",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现异步批量处理",
+        "添加断点续传机制",
+        "实现处理进度跟踪",
+        "添加错误恢复策略"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "asyncio"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson16": {
+      "lesson_id": "lesson16",
+      "title": "增量更新",
+      "module": "C",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现变更检测算法",
+        "添加增量索引更新",
+        "实现文档版本控制",
+        "添加冲突解决策略"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson17": {
+      "lesson_id": "lesson17",
+      "title": "结构化数据接入",
+      "module": "C",
+      "status": "no_changes",
+      "issues": [
+        "该课程没有任何代码变更"
+      ],
+      "matches": [],
+      "actual_changes": {
+        "files_changed": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "new_files": [],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现数据库连接器",
+        "添加REST/GraphQL API集成",
+        "实现数据格式转换",
+        "添加实时数据同步"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "pandas",
+          "requests"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson18": {
+      "lesson_id": "lesson18",
+      "title": "文本清洗与去噪",
+      "module": "C",
+      "status": "major_changes",
+      "issues": [],
+      "matches": [
+        "有大量代码新增 (2634行)"
+      ],
+      "actual_changes": {
+        "files_changed": 12,
+        "insertions": 2634,
+        "deletions": 0,
+        "new_files": [
+          "lesson18_text_cleaning/README.md",
+          "lesson18_text_cleaning/__pycache__/noise_detector.cpython-313.pyc",
+          "lesson18_text_cleaning/__pycache__/text_cleaner.cpython-313.pyc",
+          "lesson18_text_cleaning/api.py",
+          "lesson18_text_cleaning/cleaning_pipeline.py",
+          "lesson18_text_cleaning/config.py",
+          "lesson18_text_cleaning/demo.py",
+          "lesson18_text_cleaning/noise_detector.py",
+          "lesson18_text_cleaning/quality_evaluator.py",
+          "lesson18_text_cleaning/requirements.txt",
+          "lesson18_text_cleaning/test_text_cleaning.py",
+          "lesson18_text_cleaning/text_cleaner.py"
+        ],
+        "modified_files": [],
+        "deleted_files": []
+      },
+      "expected_changes": [
+        "实现文本预处理算法",
+        "添加噪声检测与清理",
+        "实现文本质量评估",
+        "添加自动化清洗流程"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "re"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    },
+    "lesson19": {
+      "lesson_id": "lesson19",
+      "title": "切分策略插件化",
+      "module": "C",
+      "status": "major_changes",
+      "issues": [],
+      "matches": [
+        "有大量代码新增 (163127行)"
+      ],
+      "actual_changes": {
+        "files_changed": 222,
+        "insertions": 163127,
+        "deletions": 3737,
+        "new_files": [
+          "\"Git\\345\\210\\206\\346\\224\\257\\347\\256\\241\\347\\220\\206\\350\\257\\264\\346\\230\\216.md\"",
+          "README_Citation_System.md",
+          "__pycache__/batch_api.cpython-313.pyc",
+          "__pycache__/batch_models.cpython-313.pyc",
+          "__pycache__/batch_processor.cpython-313.pyc",
+          "__pycache__/cache_manager.cpython-313.pyc",
+          "__pycache__/cache_performance_monitor.cpython-313.pyc",
+          "__pycache__/cached_rag_system.cpython-313.pyc",
+          "__pycache__/checkpoint_manager.cpython-313.pyc",
+          "__pycache__/citation_formatter.cpython-313.pyc",
+          "__pycache__/citation_system.cpython-313.pyc",
+          "__pycache__/confidence_calculator.cpython-313.pyc",
+          "__pycache__/error_recovery_manager.cpython-313.pyc",
+          "__pycache__/progress_tracker.cpython-313.pyc",
+          "__pycache__/query_normalizer.cpython-313.pyc",
+          "__pycache__/rag_with_citations.cpython-313.pyc",
+          "__pycache__/test_batch_api.cpython-313.pyc",
+          "__pycache__/test_batch_basic.cpython-313-pytest-8.4.1.pyc",
+          "__pycache__/test_batch_basic.cpython-313.pyc",
+          "__pycache__/test_batch_performance.cpython-313.pyc",
+          "__pycache__/test_batch_resume.cpython-313.pyc",
+          "__pycache__/test_batch_stress.cpython-313.pyc",
+          "app/services/__pycache__/hybrid_search.cpython-313.pyc",
+          "app/services/__pycache__/keyword_search.cpython-313.pyc",
+          "app/services/__pycache__/metadata_filter.cpython-313.pyc",
+          "app/services/__pycache__/vector_search.cpython-313.pyc",
+          "app/services/cached_rerank.py",
+          "app/services/enhanced_rag.py",
+          "app/services/hybrid_search.py",
+          "app/services/keyword_search.py",
+          "app/services/metadata_filter.py",
+          "app/services/rerank.py",
+          "app/services/rerank_ab_test.py",
+          "app/services/vector_search.py",
+          "batch_api.py",
+          "batch_integration.py",
+          "batch_models.py",
+          "batch_processor.py",
+          "batch_test_comprehensive_report_1756310002.json",
+          "batch_test_comprehensive_report_1756310083.json",
+          "batch_test_comprehensive_report_1756310121.json",
+          "batch_test_comprehensive_report_1756310160.json",
+          "batch_test_comprehensive_report_1756310179.json",
+          "batch_test_comprehensive_report_1756310482.json",
+          "batch_test_comprehensive_report_1756310569.json",
+          "batch_test_comprehensive_report_1756310639.json",
+          "batch_test_comprehensive_report_1756310674.json",
+          "batch_test_comprehensive_report_1756310706.json",
+          "batch_test_comprehensive_report_1756310772.json",
+          "cache_manager.py",
+          "cache_performance_20250827_231254.json",
+          "cache_performance_monitor.py",
+          "cached_rag_system.py",
+          "checkpoint_manager.py",
+          "checkpoints/active/batch_28a5e74e_1756312563.json",
+          "checkpoints/active/batch_a6344cc7_1756312528.json",
+          "checkpoints/completed/batch_16839f8c_1756313460.json",
+          "checkpoints/completed/batch_1e9bdc8f_1756313136.json",
+          "checkpoints/completed/batch_28ddde19_1756313054.json",
+          "checkpoints/completed/batch_341e86d8_1756312821.json",
+          "checkpoints/completed/batch_a337545c_1756313191.json",
+          "checkpoints/completed/batch_c73e2547_1756313345.json",
+          "checkpoints/completed/batch_d82bbbc8_1756313234.json",
+          "checkpoints/failed/batch_83a84e1d_1756312717.json",
+          "checkpoints/failed/batch_c7ed985b_1756312590.json",
+          "citation_example.py",
+          "citation_formatter.py",
+          "citation_system.py",
+          "citation_test.log",
+          "citation_test_report.json",
+          "confidence_calculator.py",
+          "\"courses/8_llm_in_action/unit6_RAG\\345\\256\\236\\346\\210\\230/lesson17_\\347\\273\\223\\346\\236\\204\\345\\214\\226\\346\\225\\260\\346\\215\\256\\346\\216\\245\\345\\205\\245/\\347\\254\\254\\345\\215\\201\\344\\270\\203\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_\\347\\273\\223\\346\\236\\204\\345\\214\\226\\346\\225\\260\\346\\215\\256\\346\\216\\245\\345\\205\\245\\347\\263\\273\\347\\273\\237.md\"",
+          "error_recovery_manager.py",
+          "final_integration_test.py",
+          "integration_test_report.json",
+          "interactive_metadata_query.py",
+          "lesson11_chunk_experiment/README.md",
+          "lesson11_chunk_experiment/start_interactive_tuner.py",
+          "lesson11_chunk_experiment/test_chunk_system.py",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "\"lesson11_chunk_experiment/\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "lesson14_cache_demo.py",
+          "lesson16_incremental_update/__pycache__/api.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/change_detector.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/config.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/conflict_resolver.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/incremental_indexer.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/integration.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/monitoring.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/run_all_tests.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/test_basic_functionality.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/test_file_monitoring.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/test_integration.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/test_performance.cpython-313.pyc",
+          "lesson16_incremental_update/__pycache__/version_manager.cpython-313.pyc",
+          "lesson16_incremental_update/api.py",
+          "lesson16_incremental_update/change_detector.py",
+          "lesson16_incremental_update/changes.json",
+          "lesson16_incremental_update/config.py",
+          "lesson16_incremental_update/conflict_resolver.py",
+          "lesson16_incremental_update/incremental_indexer.py",
+          "lesson16_incremental_update/integration.py",
+          "lesson16_incremental_update/monitoring.py",
+          "lesson16_incremental_update/performance_test_report_20250828_032557.txt",
+          "lesson16_incremental_update/performance_test_report_20250828_033429.txt",
+          "lesson16_incremental_update/performance_test_results_20250828_032557.json",
+          "lesson16_incremental_update/performance_test_results_20250828_033429.json",
+          "lesson16_incremental_update/run_all_tests.py",
+          "lesson16_incremental_update/test_basic_functionality.py",
+          "lesson16_incremental_update/test_file_monitor.py",
+          "lesson16_incremental_update/test_file_monitoring.py",
+          "lesson16_incremental_update/test_integration.py",
+          "lesson16_incremental_update/test_performance.py",
+          "lesson16_incremental_update/test_simple_integration.py",
+          "lesson16_incremental_update/version_manager.py",
+          "lesson17_structured_data/README.md",
+          "lesson17_structured_data/__init__.py",
+          "lesson17_structured_data/__pycache__/__init__.cpython-313.pyc",
+          "lesson17_structured_data/__pycache__/api.cpython-313.pyc",
+          "lesson17_structured_data/__pycache__/api_connector.cpython-313.pyc",
+          "lesson17_structured_data/__pycache__/data_connector.cpython-313.pyc",
+          "lesson17_structured_data/__pycache__/database_connector.cpython-313.pyc",
+          "lesson17_structured_data/__pycache__/sync_manager.cpython-313.pyc",
+          "lesson17_structured_data/api.py",
+          "lesson17_structured_data/api_connector.py",
+          "lesson17_structured_data/config.json",
+          "lesson17_structured_data/data_connector.py",
+          "lesson17_structured_data/database_connector.py",
+          "lesson17_structured_data/integration_demo.py",
+          "lesson17_structured_data/simple_demo.py",
+          "lesson17_structured_data/sync_manager.py",
+          "lesson17_structured_data/tests/__init__.py",
+          "lesson17_structured_data/tests/__pycache__/__init__.cpython-313.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_api.cpython-313-pytest-8.4.1.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_api.cpython-313.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_api_connector.cpython-313-pytest-8.4.1.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_api_connector.cpython-313.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_database_connector.cpython-313-pytest-8.4.1.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_database_connector.cpython-313.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_sync_manager.cpython-313-pytest-8.4.1.pyc",
+          "lesson17_structured_data/tests/__pycache__/test_sync_manager.cpython-313.pyc",
+          "lesson17_structured_data/tests/run_tests.py",
+          "lesson17_structured_data/tests/test_api.py",
+          "lesson17_structured_data/tests/test_api_connector.py",
+          "lesson17_structured_data/tests/test_database_connector.py",
+          "lesson17_structured_data/tests/test_report.txt",
+          "lesson17_structured_data/tests/test_sync_manager.py",
+          "migrations/add_metadata_fields.sql",
+          "multi_document_processor/__init__.py",
+          "multi_document_processor/__pycache__/__init__.cpython-313.pyc",
+          "multi_document_processor/__pycache__/base_processor.cpython-313.pyc",
+          "multi_document_processor/__pycache__/batch_processor.cpython-313.pyc",
+          "multi_document_processor/__pycache__/html_processor.cpython-313.pyc",
+          "multi_document_processor/__pycache__/pdf_processor.cpython-313.pyc",
+          "multi_document_processor/__pycache__/processor_factory.cpython-313.pyc",
+          "multi_document_processor/__pycache__/txt_processor.cpython-313.pyc",
+          "multi_document_processor/__pycache__/word_processor.cpython-313.pyc",
+          "multi_document_processor/base_processor.py",
+          "multi_document_processor/batch_processor.py",
+          "multi_document_processor/html_processor.py",
+          "multi_document_processor/pdf_processor.py",
+          "multi_document_processor/processor_factory.py",
+          "multi_document_processor/txt_processor.py",
+          "multi_document_processor/word_processor.py",
+          "multi_document_test.log",
+          "performance_comparison.py",
+          "performance_comparison_20250827_231403.json",
+          "progress_tracker.py",
+          "query_normalizer.py",
+          "rag_with_citations.py",
+          "run_batch_tests.py",
+          "scripts/insert_test_metadata.py",
+          "src/__pycache__/config.cpython-313.pyc",
+          "src/api/__pycache__/incremental.cpython-313.pyc",
+          "src/api/incremental.py",
+          "src/rerank/__init__.py",
+          "src/rerank/ab_test_rerank.py",
+          "src/rerank/enhanced_rag_query.py",
+          "src/rerank/test_basic_rerank.py",
+          "src/rerank/test_cached_rerank.py",
+          "test_batch_api.py",
+          "test_batch_basic.py",
+          "test_batch_performance.py",
+          "test_batch_resume.py",
+          "test_batch_stress.py",
+          "test_cache_system.py",
+          "test_citation.py",
+          "test_documents/test.csv",
+          "test_documents/test.html",
+          "test_documents/test.md",
+          "test_documents/test.txt",
+          "test_hybrid_search.py",
+          "test_metadata_filter.py",
+          "test_metadata_simple.py",
+          "test_multi_document_processor.py",
+          "test_results.json",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274.md\"",
+          "\"\\347\\254\\254\\345\\215\\201\\350\\212\\202\\350\\257\\276_\\351\\207\\215\\346\\216\\222\\345\\272\\217Rerank\\346\\216\\245\\345\\205\\245_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211.md\""
+        ],
+        "modified_files": [
+          "pyproject.toml",
+          "src/__pycache__/main.cpython-313.pyc",
+          "src/api/__pycache__/__init__.cpython-313.pyc",
+          "src/api/__pycache__/embedding.cpython-313.pyc",
+          "src/api/__pycache__/health.cpython-313.pyc",
+          "src/api/rag.py",
+          "src/document/__pycache__/__init__.cpython-313.pyc",
+          "src/document/__pycache__/chunker.cpython-313.pyc",
+          "src/document/__pycache__/document_manager.cpython-313.pyc",
+          "src/document/__pycache__/docx_parser.cpython-313.pyc",
+          "src/document/__pycache__/parser.cpython-313.pyc",
+          "src/document/__pycache__/pdf_parser.cpython-313.pyc",
+          "src/document/__pycache__/txt_parser.cpython-313.pyc",
+          "src/embedding/__pycache__/__init__.cpython-313.pyc",
+          "src/embedding/__pycache__/embedder.cpython-313.pyc",
+          "src/rag/__pycache__/__init__.cpython-313.pyc",
+          "src/rag/__pycache__/qa_generator.cpython-313.pyc",
+          "src/rag/__pycache__/rag_service.cpython-313.pyc",
+          "src/rag/__pycache__/retriever.cpython-313.pyc",
+          "src/rag/rag_service.py",
+          "src/rag/retriever.py",
+          "src/vector_store/__pycache__/__init__.cpython-313.pyc",
+          "src/vector_store/__pycache__/document_vectorizer.cpython-313.pyc",
+          "src/vector_store/__pycache__/qdrant_client.cpython-313.pyc"
+        ],
+        "deleted_files": [
+          "lesson18_text_cleaning/README.md",
+          "lesson18_text_cleaning/__pycache__/noise_detector.cpython-313.pyc",
+          "lesson18_text_cleaning/__pycache__/text_cleaner.cpython-313.pyc",
+          "lesson18_text_cleaning/api.py",
+          "lesson18_text_cleaning/cleaning_pipeline.py",
+          "lesson18_text_cleaning/config.py",
+          "lesson18_text_cleaning/demo.py",
+          "lesson18_text_cleaning/noise_detector.py",
+          "lesson18_text_cleaning/quality_evaluator.py",
+          "lesson18_text_cleaning/requirements.txt",
+          "lesson18_text_cleaning/test_text_cleaning.py",
+          "lesson18_text_cleaning/text_cleaner.py",
+          "\"\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\345\\255\\246\\347\\224\\237\\345\\256\\236\\351\\252\\214\\346\\214\\207\\345\\257\\274_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\"",
+          "\"\\347\\254\\254\\345\\215\\201\\344\\270\\200\\350\\212\\202\\350\\257\\276_\\346\\225\\231\\345\\270\\210\\350\\256\\262\\344\\271\\211_Chunk\\345\\260\\272\\345\\257\\270\\344\\270\\216\\351\\207\\215\\345\\217\\240\\345\\256\\236\\351\\252\\214.md\""
+        ]
+      },
+      "expected_changes": [
+        "实现插件化架构设计",
+        "添加策略注册机制",
+        "实现动态策略选择",
+        "添加性能基准测试"
+      ],
+      "dependency_analysis": {},
+      "code_analysis": {}
+    },
+    "lesson20": {
+      "lesson_id": "lesson20",
+      "title": "故障注入与恢复演练",
+      "module": "C",
+      "status": "missing_branch",
+      "issues": [
+        "找不到对应的分支数据"
+      ],
+      "matches": [],
+      "actual_changes": {},
+      "expected_changes": [
+        "实现故障注入框架",
+        "添加自动恢复机制",
+        "实现监控与告警",
+        "添加灾难恢复演练"
+      ],
+      "dependency_analysis": {
+        "expected_dependencies": [
+          "random"
+        ],
+        "dependency_match": "需要检查pyproject.toml变更"
+      },
+      "code_analysis": {}
+    }
+  },
+  "recommendations": [
+    "需要重点关注存在重大问题的课程",
+    "建议重新审查课程实现与讲义的匹配度"
+  ],
+  "lesson11_investigation": {
+    "lesson_id": "lesson11",
+    "refactor_analysis": {
+      "insertions": 3212,
+      "deletions": 8110,
+      "deletion_ratio": 2.524906600249066,
+      "new_files": 10,
+      "deleted_files": 28,
+      "modified_files": 23
+    },
+    "impact_assessment": {
+      "severity": "high",
+      "description": "大规模重构，可能影响系统稳定性"
+    },
+    "recommendations": [
+      "需要详细检查lesson11的具体变更内容",
+      "确认重构是否符合课程教学目标",
+      "评估对后续课程的影响"
+    ]
+  }
+}
