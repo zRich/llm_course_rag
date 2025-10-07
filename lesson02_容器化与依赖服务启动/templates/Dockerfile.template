@@ -1,0 +1,75 @@
+# RAG应用Dockerfile模板
+# 学生Exercise：请根据注释提示完成Dockerfile的编写
+
+# TODO: 选择合适的Python基础镜像
+# 提示: 使用python:3.11-slim作为基础镜像
+FROM _______________
+
+# TODO: 设置环境变量
+# 提示: 设置PYTHONUNBUFFERED=1和PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=_____ \
+    PYTHONDONTWRITEBYTECODE=_____
+
+# TODO: 设置工作目录
+# 提示: 使用/app作为工作目录
+WORKDIR _____
+
+# TODO: 安装系统依赖
+# 提示: 需要安装gcc, curl, libpq-dev等
+RUN apt-get update && apt-get install -y \
+    _____ \
+    _____ \
+    _____ \
+    && rm -rf /var/lib/apt/lists/*
+
+# TODO: 复制requirements.txt并安装Python依赖
+# 提示: 先复制requirements.txt，然后使用pip install安装
+COPY _____ .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r _____
+
+# TODO: 复制应用代码
+# 提示: 复制src目录到容器中
+COPY _____ ./src/
+
+# TODO: 创建非root用户（安全最佳实践）
+# 提示: 创建app用户并设置文件权限
+RUN useradd --create-home --shell /bin/bash _____ && \
+    chown -R _____:_____ /app
+USER _____
+
+# TODO: 暴露端口
+# 提示: FastAPI默认使用8000端口
+EXPOSE 8000
+
+# TODO: 添加健康检查
+# 提示: 使用curl检查/health端点
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:_____/health || exit 1
+
+# TODO: 设置启动命令
+# 提示: 使用uvicorn启动FastAPI应用
+CMD ["uvicorn", "src.main:app", "--host", "_____", "--port", "_____"]
+
+# ================================
+# Exercise检查清单
+# ================================
+# □ 基础镜像选择正确
+# □ 环境变量设置完整
+# □ 工作目录设置正确
+# □ 系统依赖安装完整
+# □ Python依赖安装正确
+# □ 应用代码复制正确
+# □ 用户权限设置安全
+# □ 端口暴露正确
+# □ 健康检查配置完整
+# □ 启动命令正确
+
+# ================================
+# 扩展Exercise
+# ================================
+# 1. 尝试使用多阶段构建优化镜像大小
+# 2. 添加更多的环境变量配置
+# 3. 配置日志输出到文件
+# 4. 添加信号处理优雅关闭
+# 5. 配置时区设置

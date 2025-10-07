@@ -1,0 +1,278 @@
+# RAG系统完整服务栈 - Docker Compose配置
+# 包含应用服务、数据库、缓存、向量数据库、对象存储和监控服务
+
+version: '3.8'
+
+services:
+  # ================================
+  # 核心应用服务
+  # ================================
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag-app
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      # 数据库配置
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-rag}:${POSTGRES_PASSWORD:-ragpass}@postgres:5432/${POSTGRES_DB:-rag_db}
+      # 缓存配置
+      - REDIS_URL=redis://redis:6379
+      # 向量数据库配置
+      - QDRANT_URL=http://qdrant:6333
+      # 对象存储配置
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-minioadmin}
+      # 应用配置
+      - APP_ENV=${APP_ENV:-development}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+      minio:
+        condition: service_healthy
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ================================
+  # PostgreSQL 数据库
+  # ================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: rag-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-rag_db}
+      POSTGRES_USER: ${POSTGRES_USER:-rag}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ragpass}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rag} -d ${POSTGRES_DB:-rag_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+  # ================================
+  # Redis 缓存服务
+  # ================================
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  # ================================
+  # Qdrant 向量数据库
+  # ================================
+  qdrant:
+    image: qdrant/qdrant:v1.7.4
+    container_name: rag-qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+      - ./qdrant-config.yaml:/qdrant/config/production.yaml
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    networks:
+      - rag-network
+    restart: unless-stopped
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # ================================
+  # MinIO 对象存储
+  # ================================
+  minio:
+    image: minio/minio:RELEASE.2024-01-16T16-07-38Z
+    container_name: rag-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MINIO_BROWSER_REDIRECT_URL: http://localhost:9001
+    volumes:
+      - minio_data:/data
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+  # ================================
+  # Nginx 反向代理 (可选)
+  # ================================
+  nginx:
+    image: nginx:alpine
+    container_name: rag-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    depends_on:
+      - app
+    networks:
+      - rag-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+  # ================================
+  # 监控服务 (可选)
+  # ================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: rag-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - rag-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: rag-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - rag-network
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+# ================================
+# 数据卷定义
+# ================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  minio_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+# ================================
+# 网络定义
+# ================================
+networks:
+  rag-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ================================
+# 使用说明
+# ================================
+# 基础启动：
+# docker-compose up -d
+#
+# 包含监控服务：
+# docker-compose --profile monitoring up -d
+#
+# 生产环境启动：
+# docker-compose --profile production --profile monitoring up -d
+#
+# 查看服务状态：
+# docker-compose ps
+#
+# 查看日志：
+# docker-compose logs -f app
+#
+# 停止服务：
+# docker-compose down
+#
+# 完全清理（包括数据）：
+# docker-compose down -v --remove-orphans

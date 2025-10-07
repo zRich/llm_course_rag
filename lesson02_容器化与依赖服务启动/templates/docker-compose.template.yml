@@ -1,0 +1,186 @@
+# RAG系统Docker Compose模板
+# 学生Exercise：请根据注释提示完成docker-compose.yml的编写
+
+version: '3.8'
+
+services:
+  # ================================
+  # FastAPI应用服务
+  # ================================
+  app:
+    # TODO: 配置构建上下文
+    # 提示: 使用当前目录进行构建
+    build: _____
+    container_name: rag-app
+    ports:
+      # TODO: 配置端口映射
+      # 提示: 将容器的8000端口映射到主机的8000端口
+      - "_____:_____"
+    environment:
+      # TODO: 配置数据库连接字符串
+      # 提示: postgresql://用户名:密码@主机:端口/数据库名
+      - DATABASE_URL=postgresql://_____:_____@_____:_____/_____
+      # TODO: 配置Redis连接字符串
+      # 提示: redis://主机:端口
+      - REDIS_URL=redis://_____:_____
+    depends_on:
+      # TODO: 配置服务依赖
+      # 提示: 应用依赖于postgres和redis服务
+      - postgres
+      - redis
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # ================================
+  # PostgreSQL数据库
+  # ================================
+  postgres:
+    # TODO: 选择PostgreSQL镜像
+    # 提示: 使用postgres:15官方镜像
+    image: _____
+    container_name: rag-postgres
+    environment:
+      # TODO: 配置数据库环境变量
+      # 提示: 设置数据库名、用户名和密码
+      POSTGRES_DB: _____
+      POSTGRES_USER: _____
+      POSTGRES_PASSWORD: _____
+    volumes:
+      # TODO: 配置数据持久化
+      # 提示: 将postgres_data卷挂载到/var/lib/postgresql/data
+      - _____:/var/lib/postgresql/data
+    ports:
+      # TODO: 配置端口映射
+      # 提示: PostgreSQL默认端口是5432
+      - "_____:_____"
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # ================================
+  # Redis缓存服务
+  # ================================
+  redis:
+    # TODO: 选择Redis镜像
+    # 提示: 使用redis:7-alpine镜像
+    image: _____
+    container_name: rag-redis
+    volumes:
+      # TODO: 配置数据持久化
+      # 提示: 将redis_data卷挂载到/data
+      - _____:/data
+    ports:
+      # TODO: 配置端口映射
+      # 提示: Redis默认端口是6379
+      - "_____:_____"
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # ================================
+  # Qdrant向量数据库
+  # ================================
+  qdrant:
+    # TODO: 选择Qdrant镜像
+    # 提示: 使用qdrant/qdrant:latest镜像
+    image: _____
+    container_name: rag-qdrant
+    volumes:
+      # TODO: 配置数据持久化
+      # 提示: 将qdrant_data卷挂载到/qdrant/storage
+      - _____:/qdrant/storage
+    ports:
+      # TODO: 配置端口映射
+      # 提示: Qdrant默认端口是6333
+      - "_____:_____"
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # ================================
+  # MinIO对象存储
+  # ================================
+  minio:
+    # TODO: 选择MinIO镜像
+    # 提示: 使用minio/minio:latest镜像
+    image: _____
+    container_name: rag-minio
+    # TODO: 配置启动命令
+    # 提示: server /data --console-address ":9001"
+    command: server _____ --console-address "_____"
+    environment:
+      # TODO: 配置MinIO环境变量
+      # 提示: 设置MINIO_ROOT_USER和MINIO_ROOT_PASSWORD
+      MINIO_ROOT_USER: _____
+      MINIO_ROOT_PASSWORD: _____
+    volumes:
+      # TODO: 配置数据持久化
+      # 提示: 将minio_data卷挂载到/data
+      - _____:/data
+    ports:
+      # TODO: 配置端口映射
+      # 提示: API端口9000，控制台端口9001
+      - "_____:_____"
+      - "_____:_____"
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+# ================================
+# 数据卷定义
+# ================================
+volumes:
+  # TODO: 定义数据卷
+  # 提示: 为每个需要持久化的服务创建数据卷
+  postgres_data:
+  redis_data:
+  qdrant_data:
+  minio_data:
+
+# ================================
+# 网络定义
+# ================================
+networks:
+  # TODO: 定义网络
+  # 提示: 创建rag-network桥接网络
+  _____:
+    driver: bridge
+
+# ================================
+# Exercise检查清单
+# ================================
+# □ 所有服务的镜像选择正确
+# □ 端口映射配置正确
+# □ 环境变量设置完整
+# □ 数据卷配置正确
+# □ 网络配置正确
+# □ 服务依赖关系正确
+# □ 重启策略设置合理
+
+# ================================
+# 测试命令
+# ================================
+# 启动服务栈:
+# docker-compose up -d
+#
+# 查看服务状态:
+# docker-compose ps
+#
+# 查看日志:
+# docker-compose logs -f app
+#
+# 测试应用:
+# curl http://localhost:8000/health
+#
+# 停止服务:
+# docker-compose down
+
+# ================================
+# 扩展Exercise
+# ================================
+# 1. 添加健康检查配置
+# 2. 配置资源限制
+# 3. 添加环境变量文件支持
+# 4. 配置日志驱动
+# 5. 添加监控服务
