@@ -2,410 +2,85 @@
 
 ## 实验概述
 
-本实验是RAG实战课程的第三个综合实验，专注于系统性能优化和用户体验提升。基于前两个实验构建的RAG系统，学生将学习如何通过分块策略优化、多源并行处理、可溯源输出和缓存机制来显著提升系统性能。
+本实验专注系统性能、吞吐与可溯源体验的提升，严格覆盖课程第 11-14 课：分块（Chunk）尺寸与重叠实验、多文档源并行处理、引用与可溯源输出、缓存策略。实验以“实验2 的候选集合与评估脚本”为输入，在不改变检索与重排逻辑的前提下优化整体性能与可观测性。
 
-## 实验目标
-
-- 深入理解不同分块策略对检索效果的影响
-- 实现多文档源的并行处理机制
-- 构建可溯源的答案生成系统
-- 设计和实现高效的缓存策略
-- 建立系统性能监控和评估体系
+> 边界与对齐：不包含 Lesson 7-10 的检索优化、融合、过滤与重排序工作；如需调整候选生成或评分，请回到实验2完成，并将结果作为本实验输入。
 
 ## 涉及课程
+- Lesson 11：Chunk 尺寸与重叠实验
+- Lesson 12：多文档源处理与并行架构
+- Lesson 13：引用与可溯源输出
+- Lesson 14：缓存策略与命中率优化
 
-- **Lesson 11**：Chunk尺寸与重叠实验
-- **Lesson 12**：多文档源处理
-- **Lesson 13**：引用与可溯源输出
-- **Lesson 14**：缓存策略
+## 实验目标
+- 找到不同文档类型的最佳分块参数组合（尺寸、重叠与策略）
+- 设计可扩展的多源并行处理管线，具备容错与重试能力
+- 为生成答案构建引用链路与可信度评估，提升可溯源性
+- 设计多层缓存与命中策略，降低端到端延迟并稳定性能
+- 建立可观测性与统一评估，形成可复现实验结论
 
 ## 技术栈
-
-### 新增技术组件
-- **异步处理**：asyncio、aiohttp
-- **并发控制**：ThreadPoolExecutor、ProcessPoolExecutor
-- **缓存系统**：Redis高级特性、内存缓存
-- **监控工具**：Prometheus、Grafana
-- **性能分析**：Profile、memory_profiler
-
-### 继承技术栈
-- 实验1和实验2的所有技术组件
+- 异步与并行：`asyncio`、`aiohttp`、`ThreadPoolExecutor`
+- 缓存系统：`Redis`（含 TTL/LRU/LFU）、本地内存缓存
+- 监控与埋点：`Prometheus`、`Grafana`、`logging`、`tracing`
+- 继承：沿用实验1/2 的数据层与评估脚本（不改检索逻辑）
 
 ## 前置条件
-
-- 完成实验1和实验2
-- 理解异步编程概念
-- 熟悉缓存原理和策略
-- 了解系统性能监控基础
-
-## 实验步骤
-
-### 第一阶段：分块策略优化实验（Lesson 11）
-
-1. **分块策略对比实验**
-   ```python
-   class ChunkingStrategy:
-       def __init__(self, chunk_size: int, overlap_size: int, method: str):
-           self.chunk_size = chunk_size
-           self.overlap_size = overlap_size
-           self.method = method  # 'fixed', 'semantic', 'sentence'
-   
-   # 实验不同的分块参数组合
-   strategies = [
-       ChunkingStrategy(512, 50, 'fixed'),
-       ChunkingStrategy(1024, 100, 'fixed'),
-       ChunkingStrategy(800, 80, 'semantic'),
-       ChunkingStrategy(600, 60, 'sentence'),
-   ]
-   ```
-
-2. **分块质量评估**
-   - 信息完整性评估
-   - 语义连贯性评估
-   - 检索效果对比
-   - 生成质量对比
-
-3. **自适应分块算法**
-   ```python
-   def adaptive_chunking(text: str, document_type: str) -> List[Chunk]:
-       """根据文档类型自适应选择分块策略"""
-       if document_type == 'academic_paper':
-           return semantic_chunking(text, chunk_size=1024)
-       elif document_type == 'technical_doc':
-           return sentence_chunking(text, chunk_size=800)
-       else:
-           return fixed_chunking(text, chunk_size=512)
-   ```
-
-### 第二阶段：多文档源并行处理（Lesson 12）
-
-1. **异步文档处理架构**
-   ```python
-   import asyncio
-   from concurrent.futures import ThreadPoolExecutor
-   
-   class AsyncDocumentProcessor:
-       def __init__(self, max_workers: int = 4):
-           self.executor = ThreadPoolExecutor(max_workers=max_workers)
-           self.semaphore = asyncio.Semaphore(max_workers)
-       
-       async def process_documents(self, documents: List[Document]) -> List[ProcessResult]:
-           tasks = [self.process_single_document(doc) for doc in documents]
-           return await asyncio.gather(*tasks)
-   ```
-
-2. **多源数据集成**
-   - PDF文档处理
-   - Word文档处理
-   - 网页内容抓取
-   - 数据库查询结果
-   - API接口数据
-
-3. **负载均衡和容错**
-   ```python
-   class LoadBalancer:
-       def __init__(self, workers: List[Worker]):
-           self.workers = workers
-           self.current_index = 0
-       
-       async def distribute_task(self, task: Task) -> TaskResult:
-           worker = self.get_next_worker()
-           try:
-               return await worker.process(task)
-           except Exception as e:
-               return await self.handle_failure(task, e)
-   ```
-
-### 第三阶段：可溯源输出系统（Lesson 13）
-
-1. **引用追踪机制**
-   ```python
-   class Citation:
-       def __init__(self, document_id: str, chunk_id: str, 
-                    page_number: int, confidence: float):
-           self.document_id = document_id
-           self.chunk_id = chunk_id
-           self.page_number = page_number
-           self.confidence = confidence
-   
-   class AnswerWithCitations:
-       def __init__(self, answer: str, citations: List[Citation]):
-           self.answer = answer
-           self.citations = citations
-           self.confidence_score = self.calculate_confidence()
-   ```
-
-2. **答案生成增强**
-   ```python
-   def generate_answer_with_citations(
-       query: str, 
-       retrieved_chunks: List[Chunk]
-   ) -> AnswerWithCitations:
-       # 构建带引用的prompt
-       prompt = build_citation_prompt(query, retrieved_chunks)
-       
-       # 生成答案
-       response = llm.generate(prompt)
-       
-       # 解析引用信息
-       citations = parse_citations(response, retrieved_chunks)
-       
-       return AnswerWithCitations(response.answer, citations)
-   ```
-
-3. **可信度评估**
-   - 源文档权威性评估
-   - 信息一致性检查
-   - 时效性验证
-   - 引用准确性验证
-
-### 第四阶段：缓存策略实现（Lesson 14）
-
-1. **多层缓存架构**
-   ```python
-   class MultiLevelCache:
-       def __init__(self):
-           self.l1_cache = {}  # 内存缓存
-           self.l2_cache = RedisCache()  # Redis缓存
-           self.l3_cache = DatabaseCache()  # 数据库缓存
-       
-       async def get(self, key: str) -> Optional[Any]:
-           # L1 -> L2 -> L3 -> 计算
-           return await self.cascade_get(key)
-   ```
-
-2. **智能缓存策略**
-   - LRU（最近最少使用）
-   - LFU（最不经常使用）
-   - TTL（生存时间）
-   - 语义相似性缓存
-
-3. **缓存预热和更新**
-   ```python
-   class CacheWarmer:
-       async def warm_popular_queries(self):
-           """预热热门查询"""
-           popular_queries = await self.get_popular_queries()
-           for query in popular_queries:
-               await self.precompute_and_cache(query)
-       
-       async def invalidate_outdated_cache(self):
-           """清理过期缓存"""
-           await self.redis.delete_expired_keys()
-   ```
-
-## 实验任务
-
-### 任务1：分块策略优化
-
-**目标**：通过实验找到最优的分块策略组合
-
-**具体要求**：
-1. 设计至少5种不同的分块策略
-2. 使用相同的测试数据集进行对比
-3. 从检索准确率、生成质量、处理速度三个维度评估
-4. 提供不同文档类型的分块建议
-
-**评估指标**：
-- 检索准确率提升幅度
-- 答案质量评分
-- 分块处理速度
-- 内存使用效率
-
-### 任务2：并行处理系统
-
-**目标**：构建高效的多文档源并行处理系统
-
-**具体要求**：
-1. 支持至少3种不同的文档源
-2. 实现异步并行处理
-3. 包含错误处理和重试机制
-4. 提供处理进度监控
-
-**评估指标**：
-- 并行处理吞吐量
-- 错误处理覆盖率
-- 资源利用率
-- 处理时间对比
-
-### 任务3：可溯源输出
-
-**目标**：实现完整的答案溯源系统
-
-**具体要求**：
-1. 每个答案都包含详细的引用信息
-2. 支持引用准确性验证
-3. 提供可信度评分
-4. 实现引用格式化输出
-
-**评估指标**：
-- 引用准确率
-- 可信度评估准确性
-- 用户满意度
-- 引用完整性
-
-### 任务4：缓存系统优化
-
-**目标**：设计高效的多层缓存系统
-
-**具体要求**：
-1. 实现至少3层缓存架构
-2. 支持多种缓存策略
-3. 包含缓存预热机制
-4. 提供缓存性能监控
-
-**评估指标**：
-- 缓存命中率
-- 响应时间改善
-- 内存使用优化
-- 缓存更新效率
-
-## 性能基准测试
-
-### 测试环境
-- **硬件配置**：8核CPU，16GB内存，SSD存储
-- **软件环境**：Python 3.12，PostgreSQL 15，Redis 7
-- **测试数据**：1000个文档，10000个查询
-
-### 基准指标
-
-| 指标 | 优化前 | 目标值 | 评估方法 |
-|------|--------|--------|----------|
-| 平均响应时间 | 2.5秒 | <1.5秒 | 压力测试 |
-| 并发处理能力 | 10 QPS | >50 QPS | 负载测试 |
-| 内存使用 | 2GB | <1.5GB | 资源监控 |
-| 缓存命中率 | 30% | >80% | 缓存统计 |
-| 检索准确率 | 75% | >85% | 人工评估 |
-
-## 实验数据集
-
-### 文档集合
-- **技术文档**：500个API文档和技术手册
-- **学术论文**：300篇AI/ML相关论文
-- **产品资料**：200个产品说明和用户手册
-
-### 查询集合
-- **简单查询**：200个事实性问题
-- **复杂查询**：150个多步推理问题
-- **对比查询**：100个比较分析问题
-
-## 评估标准
-
-### 性能优化（50分）
-
-- [ ] 响应时间优化（15分）
-- [ ] 并发处理能力（15分）
-- [ ] 资源使用优化（10分）
-- [ ] 缓存效果（10分）
-
-### 功能实现（30分）
-
-- [ ] 分块策略优化（10分）
-- [ ] 多源并行处理（10分）
-- [ ] 可溯源输出（10分）
-
-### 实验设计（20分）
-
-- [ ] 实验设计科学性（10分）
-- [ ] 数据分析深度（5分）
-- [ ] 结论可靠性（5分）
-
-## 监控和调试
-
-### 性能监控
-```python
-import time
-import psutil
-from prometheus_client import Counter, Histogram, Gauge
-
-# 性能指标收集
-REQUEST_COUNT = Counter('rag_requests_total', 'Total requests')
-REQUEST_DURATION = Histogram('rag_request_duration_seconds', 'Request duration')
-MEMORY_USAGE = Gauge('rag_memory_usage_bytes', 'Memory usage')
-
-def monitor_performance(func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        REQUEST_COUNT.inc()
-        
-        try:
-            result = func(*args, **kwargs)
-            return result
-        finally:
-            duration = time.time() - start_time
-            REQUEST_DURATION.observe(duration)
-            MEMORY_USAGE.set(psutil.Process().memory_info().rss)
-    
-    return wrapper
-```
-
-### 调试工具
-```python
-import cProfile
-import pstats
-from memory_profiler import profile
-
-# 性能分析
-def profile_function(func):
-    profiler = cProfile.Profile()
-    profiler.enable()
-    result = func()
-    profiler.disable()
-    
-    stats = pstats.Stats(profiler)
-    stats.sort_stats('cumulative')
-    stats.print_stats(10)
-    
-    return result
-```
-
-## 常见问题
-
-### 性能问题
-
-**Q: 并行处理时出现死锁？**
-A: 检查资源竞争，使用异步锁，避免嵌套锁定。
-
-**Q: 缓存命中率低？**
-A: 分析查询模式，优化缓存键设计，调整缓存策略。
-
-**Q: 内存使用过高？**
-A: 使用内存分析工具，优化数据结构，实现内存池。
-
-### 功能问题
-
-**Q: 引用信息不准确？**
-A: 改进引用解析算法，增加验证机制，提高LLM prompt质量。
-
-**Q: 分块效果不理想？**
-A: 尝试不同的分块算法，调整参数，考虑文档特性。
-
-## 参考资源
-
-- [Python异步编程指南](https://docs.python.org/3/library/asyncio.html)
-- [Redis缓存最佳实践](https://redis.io/docs/manual/patterns/)
-- [Prometheus监控指南](https://prometheus.io/docs/guides/)
-- [性能优化技术](https://docs.python.org/3/library/profile.html)
-
-## 实验时间安排
-
-- **理论学习**：3-4小时（性能优化理论）
-- **分块优化实验**：4-5小时（策略对比和调优）
-- **并行处理开发**：6-8小时（异步架构实现）
-- **溯源系统开发**：4-6小时（引用机制实现）
-- **缓存系统开发**：5-7小时（多层缓存架构）
-- **性能测试**：3-4小时（基准测试和分析）
-- **报告撰写**：2-3小时
-
-**总计**：27-37小时
-
-## 提交要求
-
-1. **优化后的完整系统**：包含所有性能优化功能
-2. **性能测试报告**：详细的基准测试和对比分析
-3. **监控仪表板**：实时性能监控界面
-4. **优化建议文档**：针对不同场景的优化建议
-
-## 后续实验预告
-
-完成本实验后，学生将进入实验4：工程化部署实验，学习如何将优化后的RAG系统部署到生产环境中。
+- 已完成实验1与实验2，并产出候选集与评估脚本
+- 准备至少 3 种不同类型文档（技术文档/法规条文/FAQ）
+- 明确实验2的查询集与指标口径（`nDCG@10`、`MRR@10`、延迟）
+
+## 实验步骤（建议分阶段实施）
+
+### 阶段 1：分块策略优化（Lesson 11）
+- 对比固定、语义与句级分块三类策略，不同尺寸与重叠组合
+- 指标：分块时间、索引构建时间、检索指标（以实验2候选评估）
+- 结论：按文档类型给出推荐参数表与取舍分析
+
+### 阶段 2：多源并行处理（Lesson 12）
+- 设计异步/并行管线，支持 PDF/HTML/API/DB 等多源摄取
+- 引入限流、重试与降级策略，确保稳态吞吐与可用性
+- 报告吞吐（docs/min）、平均延迟与失败率，并给出优化点
+
+### 阶段 3：引用与可溯源输出（Lesson 13）
+- 为 Top-K 结果构建引用与证据链，包含 `doc_id`、`chunk_id`、页码与置信度
+- 评估引用准确率与覆盖率，给出与答案质量的关联分析
+- 输出统一格式的可溯源答案（JSON/Markdown），便于集成前端
+
+### 阶段 4：缓存策略与命中率优化（Lesson 14）
+- 设计多层缓存（L1 内存、L2 Redis），定义键空间与 TTL
+- 选择与评估策略：LRU/LFU/语义相似缓存；建立命中率与延迟曲线
+- 讨论一致性与失效处理：主动失效、定期清理与写穿/读穿策略
+
+### 阶段 5：性能评估与可观测性
+- 建立统一埋点与仪表盘：请求量、延迟分布、错误率与缓存命中率
+- 拉齐评估口径，与实验2共用查询集与统计方法，便于横向对比
+- 形成复盘结论：在不改检索的前提下，端到端体验的提升幅度
+
+## 实验任务（必须完成）
+- 任务 A：完成 3 类分块策略的参数对比与结论产出
+- 任务 B：实现多源并行管线，覆盖至少 3 种数据源并含容错
+- 任务 C：实现可溯源输出，达到 ≥90% 引用准确率（抽样评估）
+- 任务 D：实现多层缓存并报告命中率-延迟曲线与优化建议
+
+## 评估指标与度量
+- 吞吐与延迟：docs/min、p50/p95 延迟、错误率
+- 引用质量：引用准确率、覆盖率与置信度分布
+- 缓存效果：命中率、带缓存与不带缓存的延迟对比
+- 资源利用：CPU/内存占用与稳定性（可选）
+
+## 提交与验收
+- 代码：异步/并行管线、引用输出与缓存实现，含配置与脚本
+- 报告：结构化呈现实验设计、数据、结果与取舍（建议 Markdown）
+- 指标：统一报告吞吐、延迟分布、缓存命中率与引用质量
+- 复现：按 README 指令可在本地复现主要结论（±5% 误差）
+
+## 常见问题与提示
+- 并行并不总是更快：I/O 与 CPU 负载需分场景选型
+- 语义分块可能影响可溯源定位；需在准确性与可读性间取舍
+- 缓存键空间设计决定命中率与一致性风险；注意 TTL 与失效
+- 指标口径必须与实验2一致，确保横向对比有效
+
+## 参考与对齐
+- 与实验2的接口约定与评估脚本保持一致
+- Lesson 11-14 的课程材料与示例代码（按课程目录）
