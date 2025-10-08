@@ -1,0 +1,447 @@
+# ===================================
+# 环境变量和敏感配置文件
+# ===================================
+# 所有目录下的 .env 文件
+.env
+.env.*
+**/.env
+**/.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+
+# API Keys 和敏感配置
+config/secrets.py
+config/api_keys.py
+secrets.json
+api_keys.json
+credentials.json
+service-account-key.json
+
+# ===================================
+# Python 相关
+# ===================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ===================================
+# 数据库文件
+# ===================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+database.db
+app.db
+test.db
+development.db
+production.db
+
+# PostgreSQL
+*.dump
+*.sql.gz
+
+# MySQL
+*.sql
+
+# ===================================
+# 日志文件
+# ===================================
+*.log
+logs/
+log/
+*.log.*
+*.out
+*.err
+app.log
+error.log
+access.log
+debug.log
+application.log
+
+# ===================================
+# 缓存和临时文件
+# ===================================
+# 通用缓存
+cache/
+.cache/
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Redis dump
+dump.rdb
+
+# Memcached
+*.pid
+
+# Session files
+sessions/
+
+# ===================================
+# 数据文件
+# ===================================
+data/
+datasets/
+raw_data/
+processed_data/
+uploads/
+downloads/
+media/
+static_files/
+user_uploads/
+
+# CSV, JSON, XML 数据文件
+*.csv
+*.json
+*.xml
+*.xlsx
+*.xls
+
+# ===================================
+# AI/ML 模型文件
+# ===================================
+# 模型文件
+models/
+*.bin
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.pkl
+*.pickle
+*.joblib
+*.model
+
+# Hugging Face 缓存
+.cache/huggingface/
+transformers_cache/
+
+# 向量数据库文件
+*.npy
+*.npz
+vectors/
+embeddings/
+index/
+faiss_index/
+milvus_data/
+
+# ===================================
+# Docker 相关
+# ===================================
+# Docker
+.dockerignore
+docker-compose.override.yml
+docker-compose.local.yml
+Dockerfile.local
+
+# Docker volumes
+docker_data/
+postgres_data/
+redis_data/
+milvus_data/
+
+# ===================================
+# IDE 和编辑器
+# ===================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===================================
+# 操作系统
+# ===================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===================================
+# 网络和安全
+# ===================================
+# SSL 证书
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# ===================================
+# 备份和归档
+# ===================================
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*.swp
+*.tmp
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# ===================================
+# 项目特定
+# ===================================
+# Alembic
+alembic/versions/*.py
+!alembic/versions/__init__.py
+
+# FastAPI
+.pytest_cache/
+test_*.py
+*_test.py
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# 测试数据
+test_data/
+sample_data/
+mock_data/
+
+# 配置文件备份
+config.bak
+settings.bak
+
+# 性能分析
+*.prof
+*.profile
+
+# 监控和指标
+metrics/
+monitoring/
+grafana_data/
+prometheus_data/
+
+# ===================================
+# 第三方服务
+# ===================================
+# Sentry
+.sentryclirc
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes
+*.kubeconfig
+
+# ===================================
+# 自定义忽略
+# ===================================
+# 添加您的自定义忽略规则
+# 例如：
+# my_secret_file.txt
+# custom_config/
