@@ -1,157 +1,276 @@
 # Lesson 05: Embedding与向量入库
 
-## 课程目标
+## 课次信息
+- **课程名称**: RAG系统开发实战
+- **课次**: 第5课
+- **课时**: 90分钟
+- **先修课程**: Lesson 04 - PDF解析与Chunk拆分
+- **后续课程**: Lesson 06 - 最小检索与生成（MVP RAG）
 
-学习使用BGE-M3模型进行文本向量化，并将向量存储到Qdrant向量数据库中，为后续的语义检索奠定基础。
+## SMART目标
 
-## 学习内容
+### 具体目标 (Specific)
+学生将掌握文本向量化技术和向量数据库操作，能够独立完成文档的向量化处理和入库存储。
 
-### 1. 文本向量化技术
-- **BGE-M3模型**：多语言、多粒度的向量化模型
-- **向量维度**：理解向量维度对检索效果的影响
-- **批量处理**：高效处理大量文档的向量化
-- **向量归一化**：提升检索精度的技术
+### 可衡量目标 (Measurable)
+- 理解并实现bge-m3模型的文本向量化（100%完成率）
+- 掌握Qdrant向量数据库的基本操作（增删改查）
+- 完成文档向量化和批量入库的完整流程
+- 实现向量相似度计算和基础检索功能
 
-### 2. Qdrant向量数据库
-- **集合管理**：创建和配置向量集合
-- **向量存储**：高效存储和索引向量数据
-- **元数据过滤**：支持复合查询的元数据设计
-- **性能优化**：索引配置和查询优化
+### 可达成目标 (Achievable)
+基于前序课程的Chunk拆分基础，循序渐进地学习向量化技术，通过实际操作加深理解。
 
-### 3. 向量化服务设计
-- **异步处理**：支持大规模文档的异步向量化
-- **错误处理**：向量化失败的重试和恢复机制
-- **进度跟踪**：实时监控向量化进度
-- **质量评估**：向量质量的评估指标
+### 相关性目标 (Relevant)
+向量化是RAG系统的核心技术，直接关系到后续检索质量和系统性能。
 
-## 技术栈
+### 时限目标 (Time-bound)
+90分钟内完成理论学习、实践操作和Exercise任务。
 
-- **向量化模型**：BGE-M3 (BAAI/bge-m3)
-- **向量数据库**：Qdrant
-- **深度学习框架**：Transformers, PyTorch
-- **Web框架**：FastAPI
-- **数据库**：PostgreSQL (元数据), Qdrant (向量)
-- **异步处理**：Celery + Redis
+## 教学重点难点
 
-## 实践操作
+### 教学重点
+1. **文本向量化原理**
+   - Embedding技术基础概念
+   - bge-m3模型特点和优势
+   - 向量维度和语义表示
 
-### 1. BGE-M3模型集成
-```python
-# 模型加载和向量化
-from sentence_transformers import SentenceTransformer
+2. **Qdrant向量数据库**
+   - 向量数据库vs传统数据库
+   - Qdrant核心概念和架构
+   - 集合(Collection)管理和配置
 
-model = SentenceTransformer('BAAI/bge-m3')
-vectors = model.encode(texts, normalize_embeddings=True)
+3. **向量化流程实现**
+   - 批量文档处理
+   - 向量生成和存储
+   - 索引构建和优化
+
+### 教学难点
+1. **向量空间理解**
+   - 高维向量的语义含义
+   - 相似度计算方法
+   - 向量质量评估
+
+2. **性能优化**
+   - 批处理策略
+   - 内存管理
+   - 索引效率
+
+3. **数据一致性**
+   - 向量与原文档的对应关系
+   - 元数据管理
+   - 更新和删除策略
+
+## 知识点详解
+
+### 1. 文本向量化基础
+
+#### 1.1 Embedding技术概述
+```
+文本 → 数值向量 → 语义表示
+"人工智能" → [0.1, -0.3, 0.8, ...] → 768维向量
 ```
 
-### 2. Qdrant集合配置
+**核心概念**:
+- 将文本转换为固定维度的数值向量
+- 语义相似的文本在向量空间中距离更近
+- 支持数学运算和相似度计算
+
+#### 1.2 bge-m3模型特点
+- **多语言支持**: 中英文混合处理
+- **高质量向量**: 768维密集向量表示
+- **领域适应**: 针对中文优化训练
+- **效率平衡**: 准确性与速度的良好平衡
+
+### 2. Qdrant向量数据库
+
+#### 2.1 核心概念
+- **Collection**: 向量集合，类似传统数据库的表
+- **Point**: 单个向量点，包含向量和元数据
+- **Payload**: 附加元数据，支持过滤和检索
+- **Index**: 向量索引，提高检索效率
+
+#### 2.2 数据结构
+```json
+{
+  "id": "doc_001",
+  "vector": [0.1, -0.3, 0.8, ...],
+  "payload": {
+    "text": "原始文本内容",
+    "source": "document.pdf",
+    "chunk_id": 1,
+    "metadata": {...}
+  }
+}
+```
+
+### 3. 向量化流程设计
+
+#### 3.1 处理流程
+```
+文档Chunks → 文本预处理 → 向量化 → 质量检查 → 入库存储
+```
+
+#### 3.2 批处理策略
+- 批量大小优化（建议32-128）
+- 内存使用监控
+- 错误处理和重试机制
+- 进度跟踪和日志记录
+
+## 示例演示
+
+### 示例1: bge-m3向量化
 ```python
-# 创建向量集合
+from sentence_transformers import SentenceTransformer
+
+# 加载模型
+model = SentenceTransformer('BAAI/bge-m3')
+
+# 文本向量化
+texts = ["人工智能技术", "机器学习算法"]
+embeddings = model.encode(texts)
+print(f"向量维度: {embeddings.shape}")
+```
+
+### 示例2: Qdrant基本操作
+```python
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 
+# 连接数据库
+client = QdrantClient("localhost", port=6333)
+
+# 创建集合
 client.create_collection(
     collection_name="documents",
-    vectors_config=VectorParams(size=1024, distance=Distance.COSINE)
+    vectors_config=VectorParams(size=768, distance=Distance.COSINE)
 )
 ```
 
-### 3. 向量入库流程
-```python
-# 批量向量入库
-points = [
-    PointStruct(
-        id=chunk.id,
-        vector=vector.tolist(),
-        payload={
-            "document_id": chunk.document_id,
-            "text": chunk.text,
-            "metadata": chunk.metadata
-        }
-    )
-    for chunk, vector in zip(chunks, vectors)
-]
+## 学生任务
 
-client.upsert(collection_name="documents", points=points)
-```
+### Exercise 1: 基础向量化实现 (30分钟)
+**任务描述**: 实现文本向量化的基本功能
+- 加载bge-m3模型
+- 实现单文本和批量文本向量化
+- 计算向量相似度
 
-## 项目结构
+**完成标准**:
+- [ ] 成功加载模型
+- [ ] 实现向量化函数
+- [ ] 相似度计算准确
 
-```
-lesson05_Embedding与向量入库/
-├── README.md                 # 课程说明
-└── practice/                 # 实践项目
-    ├── app/
-    │   ├── __init__.py
-    │   ├── main.py              # FastAPI应用入口
-    │   ├── core/
-    │   │   ├── __init__.py
-    │   │   ├── config.py        # 配置管理
-    │   │   ├── database.py      # 数据库连接
-    │   │   └── exceptions.py    # 异常定义
-    │   ├── models/
-    │   │   ├── __init__.py
-    │   │   ├── embedding.py     # 向量化模型
-    │   │   └── vector.py        # 向量数据模型
-    │   ├── services/
-    │   │   ├── __init__.py
-    │   │   ├── embedding.py     # 向量化服务
-    │   │   ├── qdrant.py        # Qdrant客户端
-    │   │   └── vector_store.py  # 向量存储服务
-    │   ├── api/
-    │   │   ├── __init__.py
-    │   │   └── v1/
-    │   │       ├── __init__.py
-    │   │       ├── embeddings.py # 向量化API
-    │   │       └── vectors.py    # 向量查询API
-    │   ├── schemas/
-    │   │   ├── __init__.py
-    │   │   ├── embedding.py     # 向量化请求响应
-    │   │   └── vector.py        # 向量查询请求响应
-    │   └── tasks/
-    │       ├── __init__.py
-    │       └── embedding.py     # 异步向量化任务
-    ├── tests/
-    │   ├── __init__.py
-    │   ├── test_embedding.py    # 向量化测试
-    │   ├── test_qdrant.py       # Qdrant测试
-    │   └── test_vector_store.py # 向量存储测试
-    ├── scripts/
-    │   ├── start.sh             # 启动脚本
-    │   ├── test.sh              # 测试脚本
-    │   └── setup_qdrant.sh      # Qdrant初始化
-    ├── requirements.txt         # Python依赖
-    ├── Dockerfile              # Docker配置
-    ├── docker-compose.yml      # 服务编排
-    └── .env.example            # 环境变量示例
-```
+### Exercise 2: Qdrant数据库操作 (25分钟)
+**任务描述**: 掌握向量数据库的基本操作
+- 创建和配置Collection
+- 实现向量的增删改查
+- 批量数据导入
 
-## 核心概念
+**完成标准**:
+- [ ] Collection创建成功
+- [ ] CRUD操作正常
+- [ ] 批量导入无错误
 
-### 1. 向量化策略
+### Lab 3: 完整向量化流水线 (35分钟)
+**任务描述**: 构建端到端的向量化处理系统
+- 整合前序课程的Chunk数据
+- 实现完整的向量化流水线
+- 添加错误处理和监控
 
-**文档级向量化**
-- 整个文档生成一个向量
-- 适用于文档级别的相似性检索
-- 计算效率高，存储成本低
+**完成标准**:
+- [ ] 流水线运行稳定
+- [ ] 错误处理完善
+- [ ] 性能指标达标
 
-**分块级向量化**
-- 每个文档分块生成独立向量
-- 支持细粒度的语义检索
-- 检索精度高，适合问答场景
+## 对齐与连续性
 
-**混合向量化**
-- 同时保存文档级和分块级向量
-- 支持多层次的检索策略
-- 灵活性高，适应不同场景
+### 与前序课程的连接
+- **Lesson 04输出**: 结构化的文档Chunks
+- **本课输入**: Chunk文本数据
+- **技术衔接**: 从文本处理到向量表示
 
-### 2. 向量质量指标
+### 与后续课程的准备
+- **本课输出**: 向量化的文档库
+- **Lesson 06输入**: 可检索的向量数据
+- **技术铺垫**: 为检索和生成做准备
 
-**向量分布**
-- 向量空间的分布均匀性
-- 避免向量聚集和稀疏区域
+### 模块目标对齐
+- **Module B目标**: 构建高质量的RAG系统
+- **本课贡献**: 提供语义检索的基础设施
+- **技能发展**: 向量化技术和数据库操作
 
-**语义一致性**
+## 提交与验收
+
+### 提交要求
+1. **代码文件**
+   - `embedding_processor.py`: 向量化处理器
+   - `vector_database.py`: 数据库操作类
+   - `pipeline_demo.py`: 完整流水线演示
+
+2. **实验报告**
+   - 向量化效果分析
+   - 性能测试结果
+   - 问题解决记录
+
+3. **数据文件**
+   - 向量化后的数据样本
+   - 数据库配置文件
+   - 测试用例和结果
+
+### 验收标准
+- **功能完整性** (40%): 所有核心功能正常工作
+- **代码质量** (25%): 结构清晰，注释完整
+- **性能表现** (20%): 处理效率和准确性
+- **文档质量** (15%): 实验报告和代码文档
+
+### 评分等级
+- **优秀 (90-100分)**: 超额完成，有创新优化
+- **良好 (80-89分)**: 完全达标，质量较高
+- **及格 (70-79分)**: 基本达标，存在小问题
+- **不及格 (<70分)**: 未达基本要求
+
+## 边界声明
+
+### 本课范围内
+- bge-m3模型的使用和优化
+- Qdrant数据库的基本操作
+- 向量化流水线的设计和实现
+- 基础的相似度计算和检索
+
+### 本课范围外
+- 深度学习模型的训练和微调
+- 复杂的向量索引算法
+- 分布式向量数据库部署
+- 高级的检索优化策略
+
+### 技术约束
+- 使用指定的bge-m3模型
+- 基于Qdrant向量数据库
+- Python开发环境
+- 单机部署场景
+
+## 文档导航
+
+### 教学文档
+- [教师授课脚本](./teacher-script.md) - 详细的授课流程和要点
+- [板书设计](./blackboard-steps.md) - 结构化的板书布局
+- [教学检查清单](./checklist.md) - 质量保证和评估
+
+### 学习资源
+- [示例代码](./examples/) - 课堂演示和参考实现
+- [练习模板](./templates/) - 学生Exercise和Lab模板
+- [测试数据](./data/) - 实验用的样本数据
+
+### 技术参考
+- [bge-m3模型文档](https://huggingface.co/BAAI/bge-m3)
+- [Qdrant官方文档](https://qdrant.tech/documentation/)
+- [向量化最佳实践](../best-practices/embedding-guide.md)
+
+---
+
+**课程设计**: RAG系统开发实战  
+**更新时间**: 2024年1月  
+**版本**: v1.0
 - 相似内容的向量距离
 - 不同内容的向量区分度
 
