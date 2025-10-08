@@ -26,7 +26,7 @@
 - **并发控制**：ThreadPoolExecutor、ProcessPoolExecutor
 - **缓存系统**：Redis高级特性、内存缓存
 - **监控工具**：Prometheus、Grafana
-- **性能分析**：cProfile、memory_profiler
+- **性能分析**：Profile、memory_profiler
 
 ### 继承技术栈
 - 实验1和实验2的所有技术组件
