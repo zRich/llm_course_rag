@@ -348,3 +348,10 @@ class CustomTransformer(DataTransformer):
 ## 许可证
 
 MIT License
+
+## 导航与配套材料（与最佳实践对齐）
+- [教师讲稿](./teacher-script.md)
+- [黑板/投屏操作步骤](./blackboard-steps.md)
+- [提交前检查清单](./checklist.md)
+- 示例与配置：`examples/` → [input_structured.json](./examples/input_structured.json)
+- 学生提交模板：`templates/` → [submission_template.md](./templates/submission_template.md)

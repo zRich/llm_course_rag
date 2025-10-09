@@ -49,3 +49,10 @@
 - [教师讲义](./教师讲义.md)
 - [学生实验指导](./学生实验指导.md)
 - [课程代码示例](./课程代码示例.md)
+ 
+## 导航与配套材料（与最佳实践对齐）
+- [教师讲稿](./teacher-script.md)
+- [黑板/投屏操作步骤](./blackboard-steps.md)
+- [提交前检查清单](./checklist.md)
+- 示例与配置：`examples/` → [noisy_samples.txt](./examples/noisy_samples.txt), [cleaning_config.json](./examples/cleaning_config.json)
+- 学生提交模板：`templates/` → [submission_template.md](./templates/submission_template.md)
