@@ -1,0 +1,10 @@
+[00:00] inject rate_limit_429 target=search failure_rate=0.30
+[00:02] retry attempt=1 delay=0.2s op=search
+[00:06] retry attempt=3 delay=0.8s op=search
+[00:12] success after retries op=search
+[00:25] inject network_timeout target=embedding timeout=800ms
+[00:25] circuit breaker OPEN target=embedding
+[00:40] half-open probe #1 target=embedding -> fail
+[00:55] half-open probe #2 target=embedding -> success
+[01:00] inject service_500 target=index_write
+[01:00] fallback apply op=index_write action=queue_later

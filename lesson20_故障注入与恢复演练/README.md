@@ -56,6 +56,13 @@ lesson20_故障注入与恢复演练/
     ├── recovery/            # 恢复机制模块
     ├── monitoring/          # 监控模块
     └── tests/              # 测试脚本
+
+## 导航与配套材料（与最佳实践对齐）
+- [教师讲稿](./teacher-script.md)
+- [黑板/投屏操作步骤](./blackboard-steps.md)
+- [提交前检查清单](./checklist.md)
+- 示例与配置：`examples/` → [fault_plan.json](./examples/fault_plan.json), [sample_logs.txt](./examples/sample_logs.txt)
+- 学生提交模板：`templates/` → [submission_template.md](./templates/submission_template.md)
 ```
 
 ### 核心组件

@@ -146,4 +146,11 @@ results = compare_strategies(text, ['fixed_length', 'semantic', 'paragraph'])
 
 for strategy_name, result in results.items():
     if 'error' not in result:
-        print(f"{strategy_name}: {result['chunk
+        print(f"{strategy_name}: {result['chunk_count']} chunks, avg_len={result['avg_length']}")
+
+## 导航与配套材料（与最佳实践对齐）
+- [教师讲稿](./teacher-script.md)
+- [黑板/投屏操作步骤](./blackboard-steps.md)
+- [提交前检查清单](./checklist.md)
+- 示例与配置：`examples/` → [raw_text.txt](./examples/raw_text.txt), [plugin_config.json](./examples/plugin_config.json)
+- 学生提交模板：`templates/` → [submission_template.md](./templates/submission_template.md)

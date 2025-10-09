@@ -1,0 +1,9 @@
+这是第一段文本。
+
+This is the second paragraph.
+
+代码片段：
+def foo():
+    return 42
+
+第三段包含中文与 English 混合，以及一些符号——需要合理边界。
